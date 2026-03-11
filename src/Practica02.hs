@@ -28,15 +28,17 @@ u = Var "u"
 type Estado = [String]
 
 --Funciones de la practica pasada
-conjPotencia :: [a] -> [[a]]
-conjPotencia [] = [[]]
-conjPotencia (x:xs) = [(x:xs) | ys <- conjPotencia xs] ++ conjPotencia xs
+conjuntoPotencia :: [a] -> [[a]]
+conjuntoPotencia [] = [[]]
+conjuntoPotencia (x:xs) =
+  let ps = conjuntoPotencia xs
+  in ps ++ map (x:) ps
 
 sinDuplicados :: Eq a => [a] -> [a]
 sinDuplicados [] = []
 sinDuplicados (x:xs)
-  | x 'elem' xs = sinDuplicados xs
-  | otherwise = x : sinduplicados xs
+  | x `elem` xs = sinDuplicados xs
+  | otherwise = x : sinDuplicados xs
 
 
 --EJERCICIOS
