@@ -69,11 +69,12 @@ sonEquivalentes f g =
 
 --Ejercicio 6 
 tautologia :: Prop -> Bool
-tautologia = undefined
+tautologia f = all (interpretacion f) (estadosPosibles f)
+
 
 --Ejercicio 7
 contradiccion :: Prop -> Bool
-contradiccion = undefined
+contradiccion f = all (not . interpretacion f) (estadosPosibles f)
 
 --Ejercicio 8
 consecuenciaLogica :: [Prop] -> Prop -> Bool
