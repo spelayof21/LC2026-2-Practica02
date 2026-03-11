@@ -56,8 +56,13 @@ variables (Syss f g) = sinDuplicados (variables f ++ variables g)
 
 --Ejercicio 2
 interpretacion :: Prop -> Estado -> Bool
-interpretacion = undefined
-
+interpretacion (Cons b) _ = b
+interpretacion (Var x) i = x `elem` i
+interpretacion (Not f) i  = not (interpretacion f i)
+interpretacion (And f g) i = interpretacion f i && interpretacion g i
+interpretacion (Or f g) i = interpretacion f i || interpretacion g i
+interpretacion (Impl f g) i = not (interpretacion f i) || interpretacion g i
+interpretacion (Syss f g) i = interpretacion f i == interpretacion g i
 --Ejercicio 3
 estadosPosibles :: Prop -> [Estado]
 estadosPosibles = undefined
