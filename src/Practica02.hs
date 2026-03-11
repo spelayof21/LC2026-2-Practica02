@@ -27,18 +27,8 @@ u = Var "u"
 
 type Estado = [String]
 
---Funciones de la practica pasada
-conjuntoPotencia :: [a] -> [[a]]
-conjuntoPotencia [] = [[]]
-conjuntoPotencia (x:xs) =
-  let ps = conjuntoPotencia xs
-  in ps ++ map (x:) ps
 
-sinDuplicados :: Eq a => [a] -> [a]
-sinDuplicados [] = []
-sinDuplicados (x:xs)
-  | x `elem` xs = sinDuplicados xs
-  | otherwise = x : sinDuplicados xs
+
 
 
 --EJERCICIOS
@@ -65,7 +55,7 @@ interpretacion (Impl f g) i = not (interpretacion f i) || interpretacion g i
 interpretacion (Syss f g) i = interpretacion f i == interpretacion g i
 --Ejercicio 3
 estadosPosibles :: Prop -> [Estado]
-estadosPosibles f = conjuntoPotencia (variables f)
+estadosPosibles f = conjPotencia (variables f)
 
 --Ejercicio 4
 modelos :: Prop -> [Estado]
@@ -73,7 +63,9 @@ modelos f = [i | i <- estadosPosibles f, interpretacion f i]
 
 --Ejercicio 5
 sonEquivalentes :: Prop -> Prop -> Bool
-sonEquivalentes = undefined
+sonEquivalentes f g =
+  let estados = conjPotencia (sinDuplicados (variables f ++ variables g))
+  in all (\i -> interpretacion f i == interpretacion g i) estados
 
 --Ejercicio 6 
 tautologia :: Prop -> Bool
@@ -92,3 +84,9 @@ consecuenciaLogica = undefined
 conjPotencia :: [a] -> [[a]]
 conjPotencia [] = [[]]
 conjPotencia (x:xs) = [(x:ys) | ys <- conjPotencia xs] ++ conjPotencia xs
+
+sinDuplicados :: Eq a => [a] -> [a]
+sinDuplicados [] = []
+sinDuplicados (x:xs)
+  | x `elem` xs = sinDuplicados xs
+  | otherwise = x : sinDuplicados xs
