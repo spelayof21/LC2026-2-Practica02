@@ -27,11 +27,30 @@ u = Var "u"
 
 type Estado = [String]
 
+--Funciones de la practica pasada
+conjPotencia :: [a] -> [[a]]
+conjPotencia [] = [[]]
+conjPotencia (x:xs) = [(x:xs) | ys <- conjPotencia xs] ++ conjPotencia xs
+
+sinDuplicados :: Eq a => [a] -> [a]
+sinDuplicados [] = []
+sinDuplicados (x:xs)
+  | x 'elem' xs = sinDuplicados xs
+  | otherwise = x : sinduplicados xs
+
+
 --EJERCICIOS
 
 --Ejercicio 1
 variables :: Prop -> [String]
-variables = undefined
+variables (Cons _) = []
+variables (Var x) = [x]
+variables (Not f) = sinDuplicados (variables f)
+variables (And f g)  = sinDuplicados (variables f ++ variables g)
+variables (Or f g) = sinDuplicados (variables f ++ variables g)
+variables (Impl f g)  = sinDuplicados (variables f ++ variables g)
+variables (Syss f g) = sinDuplicados (variables f ++ variables g)
+
 
 --Ejercicio 2
 interpretacion :: Prop -> Estado -> Bool
