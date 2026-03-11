@@ -78,8 +78,11 @@ contradiccion f = all (not . interpretacion f) (estadosPosibles f)
 
 --Ejercicio 8
 consecuenciaLogica :: [Prop] -> Prop -> Bool
-consecuenciaLogica = undefined
-
+consecuenciaLogica premisas conclusion =
+  let todasLasVars = sinDuplicados (concatMap variables premisas ++ variables conclusion)
+      todosEstados = conjPotencia todasLasVars
+      esModeloDePremisas i = all (\f -> interpretacion f i) premisas
+  in all (\i -> not (esModeloDePremisas i) || interpretacion conclusion i) todosEstados
 
 --Funcion auxiliar
 conjPotencia :: [a] -> [[a]]
