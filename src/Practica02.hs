@@ -65,11 +65,11 @@ interpretacion (Impl f g) i = not (interpretacion f i) || interpretacion g i
 interpretacion (Syss f g) i = interpretacion f i == interpretacion g i
 --Ejercicio 3
 estadosPosibles :: Prop -> [Estado]
-estadosPosibles = undefined
+estadosPosibles f = conjuntoPotencia (variables f)
 
 --Ejercicio 4
 modelos :: Prop -> [Estado]
-modelos = undefined
+modelos f = [i | i <- estadosPosibles f, interpretacion f i]
 
 --Ejercicio 5
 sonEquivalentes :: Prop -> Prop -> Bool
